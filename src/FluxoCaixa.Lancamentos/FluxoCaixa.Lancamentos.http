@@ -1,0 +1,6 @@
+@FluxoCaixa.Lancamentos_HostAddress = http://localhost:5224
+
+GET {{FluxoCaixa.Lancamentos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

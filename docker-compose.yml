@@ -1,0 +1,21 @@
+services:
+  # Banco de dados PostgreSQL
+  postgres:
+    image: postgres:latest
+    container_name: fluxocaixa_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: fluxocaixa
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fluxocaixa_network
+
+networks:
+  fluxocaixa_network:
+
+volumes:
+  postgres_data:
