@@ -1,2 +1,4 @@
-src/FluxoCaixa.Lancamentos/bin/Debug/net8.0/
-src/FluxoCaixa.Lancamentos/obj/Debug/net8.0/
+src/FluxoCaixa.Lancamentos/bin/
+src/FluxoCaixa.Lancamentos/obj/
+src/FluxoCaixa.Consolidado/bin/
+src/FluxoCaixa.Consolidado/obj/

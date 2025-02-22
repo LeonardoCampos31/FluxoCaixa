@@ -15,7 +15,7 @@ namespace FluxoCaixa.Lancamentos.Modules.Repositories
         public async Task AdicionarLancamentoAsync(Lancamento lancamento)
         {
             lancamento.Id = Guid.NewGuid();
-            Set.Add(lancamento);
+            InsertAsync(lancamento);
             await Context.SaveChangesAsync();
         }
 

@@ -6,16 +6,41 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: fluxocaixa
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - fluxocaixa_network
 
-networks:
-  fluxocaixa_network:
+# RabbitMQ para mensageria
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: fluxocaixa_rabbitmq
+    ports:
+      - "5672:5672"  # Porta para conexão AMQP
+      - "15672:15672"  # Porta para interface de gerenciamento
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    networks:
+      - fluxocaixa_network
 
+  # Redis para caching
+  redis:
+    image: redis:latest
+    container_name: fluxocaixa_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - fluxocaixa_network
+      
+# Volumes para persistência de dados
 volumes:
   postgres_data:
+
+# Rede para comunicação entre os containers
+networks:
+  fluxocaixa_network:
+    driver: bridge

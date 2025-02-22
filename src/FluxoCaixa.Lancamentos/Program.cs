@@ -1,3 +1,4 @@
+using FluxoCaixa.Consolidado.Modules.Factory;
 using FluxoCaixa.Lancamentos.Modules.DataTransfers.Context;
 using FluxoCaixa.Lancamentos.Modules.Models;
 using FluxoCaixa.Lancamentos.Modules.Repositories;
@@ -14,6 +15,7 @@ builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IRepository<Lancamento>, Repository<Lancamento>>();
 builder.Services.AddScoped<ILancamentoRepository, LancamentoRepository>();
 builder.Services.AddScoped<LancamentoService>();
+builder.Services.AddScoped<LancamentoProducer>();
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

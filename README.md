@@ -11,6 +11,7 @@ Sistema para controle de lançamentos (débitos e créditos) e geração de rela
 - Microsoft.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.Design
 - Npgsql.EntityFrameworkCore.PostgreSQL
+- RabbitMQ.Client
 
 ### Passos
 1. Clone o repositório:
@@ -18,12 +19,18 @@ Sistema para controle de lançamentos (débitos e créditos) e geração de rela
    git clone https://github.com/seu-usuario/fluxocaixa.git
    cd fluxocaixa
 
-2. Suba os containers:
+2. Acesse a pasta FluxoCaixa e Suba os containers:
     docker-login
-    docker-compose up --build
+    docker-compose up --build -d
 
-3. Acesse o a pasta do projeto: FluxoCaixa.Lancamentos
-    Execute os comando: 
-        dotnet tool install --global dotnet-ef
-        dotnet ef migrations add InitialCreate
-        dotnet ef database update
+3. Acesse o a pasta do projeto: 
+    FluxoCaixa.Lancamentos
+        Execute os comando:
+            dotnet tool install --global dotnet-ef
+            dotnet ef migrations add InitialCreate
+            dotnet ef database update
+    FluxoCaixa.Consolidado
+        Execute os comando:
+            dotnet tool install --global dotnet-ef
+            dotnet ef migrations add InitialCreate
+            dotnet ef database update

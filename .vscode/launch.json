@@ -1,0 +1,50 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "API 1: Lancamentos",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/FluxoCaixa.Lancamentos/bin/Debug/net8.0/FluxoCaixa.Lancamentos.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/FluxoCaixa.Lancamentos",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://localhost:5000",
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/FluxoCaixa.Lancamentos/Views"
+            },
+        },
+        {
+            "name": "API 2: Consolidado",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/FluxoCaixa.Consolidado/bin/Debug/net8.0/FluxoCaixa.Consolidado.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/FluxoCaixa.Consolidado",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://localhost:5001"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/FluxoCaixa.Consolidado/Views"
+            },
+        }
+    ]
+}

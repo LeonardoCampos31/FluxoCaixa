@@ -1,6 +1,7 @@
+using FluxoCaixa.Lancamentos.Modules.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace FluxoCaixa.Lancamentos.Modules.Repositories.Base
+namespace FluxoCaixa.Modules.Repositories.Base
 {
     public class Repository<T> : IDisposable, IRepository<T> where T : class
     {
