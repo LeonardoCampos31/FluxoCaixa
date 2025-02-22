@@ -1,5 +1,4 @@
-
-
+using FluxoCaixa.Consolidado.Modules.Context;
 using FluxoCaixa.Consolidado.Modules.Entity;
 using FluxoCaixa.Modules.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ namespace FluxoCaixa.Consolidado.Modules.Repositories
         Task<ConsolidadoDiario?> ObterConsolidadoPorDataAsync(DateTime data);
     }
 
-    public class ConsolidadoRepository(DbContext context) : Repository<ConsolidadoDiario>(context), IConsolidadoRepository
+    public class ConsolidadoRepository(AppDbContext context) : Repository<ConsolidadoDiario>(context), IConsolidadoRepository
     {
 
         public async Task AtualizarConsolidadoAsync(DateTime data, decimal valor)

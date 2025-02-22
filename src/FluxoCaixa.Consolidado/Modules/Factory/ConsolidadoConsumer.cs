@@ -1,7 +1,9 @@
 using System.Text;
 using System.Text.Json;
+using FluxoCaixa.Consolidado.Modules.Config;
 using FluxoCaixa.Consolidado.Modules.Entity;
 using FluxoCaixa.Consolidado.Modules.Services;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -9,24 +11,26 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
 {
     public class ConsolidadoConsumer : BackgroundService
     {
+        private readonly RabbitMQSettings _rabbitMQSettings;
         private IConnection _connection;
         private IChannel _channel;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public ConsolidadoConsumer(IServiceScopeFactory serviceScopeFactory)
+        public ConsolidadoConsumer(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> rabbitMQSettings)
         {
             _serviceScopeFactory = serviceScopeFactory;
+            _rabbitMQSettings = rabbitMQSettings.Value;
         }
 
         private async Task InitializeRabbitMQ()
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
-                Port = 5672,
-                UserName = "admin",
-                Password = "admin123",
-                VirtualHost = "/"
+                HostName = _rabbitMQSettings.HostName,
+                Port = _rabbitMQSettings.Port,
+                UserName = _rabbitMQSettings.UserName,
+                Password = _rabbitMQSettings.Password,
+                VirtualHost = _rabbitMQSettings.VirtualHost
             };
 
             _connection = await factory.CreateConnectionAsync();
@@ -58,7 +62,6 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
 
             await _channel.BasicConsumeAsync(queue: "lancamentos", autoAck: true, consumer: consumer);
             await Task.Delay(Timeout.Infinite, stoppingToken);
-            //Dispose();
         }
 
         public override void Dispose()

@@ -1,36 +1,26 @@
 using System.Text;
 using System.Text.Json;
+using FluxoCaixa.Lancamentos.Modules.Config;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
 namespace FluxoCaixa.Consolidado.Modules.Factory
 {
     public class LancamentoProducer
     {
-        private readonly IConnection _connection;
-        private readonly IChannel _channel;
+        private readonly RabbitMQSettings _rabbitMQSettings;
+        private IConnection _connection;
+        private IChannel _channel;
 
-        public LancamentoProducer()
+        public LancamentoProducer(IOptions<RabbitMQSettings> rabbitMQSettings)
         {
-            var factory = new ConnectionFactory()
-            {
-                HostName = "localhost", 
-                Port = 5672, 
-                UserName = "admin",
-                Password = "admin123",
-                VirtualHost = "/"
-            };
-
-            factory.ClientProvidedName = "app:audit component:lancamentos";
-
-            _connection = factory.CreateConnectionAsync().GetAwaiter().GetResult();
-
-            _channel = _connection.CreateChannelAsync().GetAwaiter().GetResult();
-
-            _channel.QueueDeclareAsync(queue: "lancamentos", durable: false, exclusive: false, autoDelete: false, arguments: null);
+            _rabbitMQSettings = rabbitMQSettings.Value;
         }
 
         public async Task PublicarLancamento(decimal valor, string tipo)
         {
+            await InitializeRabbitMQ();
+
             var lancamento = new { Valor = valor, Tipo = tipo, Data = DateTime.UtcNow };
             
             byte[] body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(lancamento));
@@ -41,8 +31,28 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
 
             await _channel.BasicPublishAsync(exchange: "", routingKey: "lancamentos", mandatory: true, basicProperties: props, body: body);
 
-            Console.WriteLine($"Mensagem enviada: {valor} - {tipo}");
+            Dispose();
         }
+
+        private async Task InitializeRabbitMQ()
+        {
+            var factory = new ConnectionFactory()
+            {
+                HostName = _rabbitMQSettings.HostName,
+                Port = _rabbitMQSettings.Port,
+                UserName = _rabbitMQSettings.UserName,
+                Password = _rabbitMQSettings.Password,
+                VirtualHost = _rabbitMQSettings.VirtualHost
+            };
+
+           factory.ClientProvidedName = "app:audit component:lancamentos";
+
+            _connection = await factory.CreateConnectionAsync();
+
+            _channel = await _connection.CreateChannelAsync();
+
+            await _channel.QueueDeclareAsync(queue: "lancamentos", durable: false, exclusive: false, autoDelete: false, arguments: null);
+       }
 
         public void Dispose()
         {

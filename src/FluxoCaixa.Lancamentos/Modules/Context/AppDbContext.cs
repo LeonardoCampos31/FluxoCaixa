@@ -5,18 +5,9 @@ namespace FluxoCaixa.Lancamentos.Modules.DataTransfers.Context
 {
     public class AppDbContext : DbContext
     {
-        private IConfiguration _configuration;
-        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options) 
-        {
-            _configuration = configuration;
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Lancamento> Lancamento { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

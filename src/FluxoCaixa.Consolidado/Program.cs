@@ -1,3 +1,4 @@
+using FluxoCaixa.Consolidado.Modules.Config;
 using FluxoCaixa.Consolidado.Modules.Context;
 using FluxoCaixa.Consolidado.Modules.Entity;
 using FluxoCaixa.Consolidado.Modules.Factory;
@@ -9,14 +10,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration["DefaultConnection"]));
 
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IRepository<ConsolidadoDiario>, Repository<ConsolidadoDiario>>();
 builder.Services.AddScoped<IConsolidadoRepository, ConsolidadoRepository>();
 builder.Services.AddScoped<ConsolidadoService>();
+ 
 builder.Services.AddHostedService<ConsolidadoConsumer>();
+
+builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

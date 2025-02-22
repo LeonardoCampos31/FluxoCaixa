@@ -20,6 +20,12 @@
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
                 "ASPNETCORE_URLS": "http://localhost:5000",
+                "DefaultConnection": "Host=localhost;Port=5432;Database=fluxocaixa_lancamento;Username=admin;Password=admin123",
+                "RabbitMQ__HostName": "localhost",
+                "RabbitMQ__Port": "5672",
+                "RabbitMQ__UserName": "admin",
+                "RabbitMQ__Password": "admin123",
+                "RabbitMQ__VirtualHost": "/"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/src/FluxoCaixa.Lancamentos/Views"
@@ -40,7 +46,13 @@
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://localhost:5001"
+                "ASPNETCORE_URLS": "http://localhost:5001",
+                "DefaultConnection": "Host=localhost;Port=5432;Database=fluxocaixa_consolidado;Username=admin;Password=admin123",
+                "RabbitMQ__HostName": "localhost",
+                "RabbitMQ__Port": "5672",
+                "RabbitMQ__UserName": "admin",
+                "RabbitMQ__Password": "admin123",
+                "RabbitMQ__VirtualHost": "/"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/src/FluxoCaixa.Consolidado/Views"

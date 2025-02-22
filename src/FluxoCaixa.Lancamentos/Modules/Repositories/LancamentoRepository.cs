@@ -1,3 +1,4 @@
+using FluxoCaixa.Lancamentos.Modules.DataTransfers.Context;
 using FluxoCaixa.Lancamentos.Modules.Models;
 using FluxoCaixa.Lancamentos.Modules.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ namespace FluxoCaixa.Lancamentos.Modules.Repositories
         Task<IEnumerable<Lancamento>> ObterLancamentosPorDataAsync(DateTime data);
     }
 
-    public class LancamentoRepository(DbContext context) : Repository<Lancamento>(context), ILancamentoRepository
+    public class LancamentoRepository(AppDbContext context) : Repository<Lancamento>(context), ILancamentoRepository
     {
         public async Task AdicionarLancamentoAsync(Lancamento lancamento)
         {
