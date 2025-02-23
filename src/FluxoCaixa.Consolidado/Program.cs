@@ -7,6 +7,7 @@ using FluxoCaixa.Consolidado.Modules.Services;
 using FluxoCaixa.Lancamentos.Modules.Repositories.Base;
 using FluxoCaixa.Modules.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,15 +27,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(8081);
+});
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.UseMetricServer("/metrics");
+app.UseHttpMetrics();
+
+app.MapGet("/", () => "Serviço Consolidado");
 
 app.MapControllers();
 app.Run();

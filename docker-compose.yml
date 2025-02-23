@@ -1,5 +1,5 @@
 services:
-  # Banco de dados PostgreSQL
+# Banco de dados PostgreSQL
   postgres:
     image: postgres:latest
     container_name: fluxocaixa_postgres
@@ -27,12 +27,86 @@ services:
     networks:
       - fluxocaixa_network
 
-  # Redis para caching
+# Redis para caching
   redis:
     image: redis:latest
     container_name: fluxocaixa_redis
     ports:
       - "6379:6379"
+    networks:
+      - fluxocaixa_network
+
+# prometheus para monitoramento
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - fluxocaixa_network
+
+# Grafana para visualização de métricas
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - fluxocaixa_network
+
+# Serviço de Carga de Dados
+#  k6:
+#    image: carga-k6
+#    container_name: carga-k6
+#    networks:
+#      - fluxocaixa_network
+
+# Serviço de Lançamentos
+  lancamentos:
+    image: fluxocaixa_lancamentos
+    container_name: fluxocaixa_lancamentos
+    build:
+      context: ./src/FluxoCaixa.Lancamentos
+      dockerfile: Dockerfile
+    ports:
+      - "5005:8080"
+    environment:
+      - DefaultConnection=Host=postgres;Port=5432;Database=fluxocaixa_lancamento;Username=admin;Password=admin123
+      - RabbitMQ:HostName=rabbitmq
+      - RabbitMQ:Port=5672
+      - RabbitMQ:UserName=admin
+      - RabbitMQ:Password=admin123
+      - RabbitMQ:VirtualHost=/
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - fluxocaixa_network
+
+# Serviço de Consolidado Diário
+  consolidado:
+    image: fluxocaixa_consolidado
+    container_name: fluxocaixa_consolidado
+    build:
+      context: ./src/FluxoCaixa.Consolidado
+      dockerfile: Dockerfile
+    ports:
+      - "5004:8081"
+    environment:
+      - DefaultConnection=Host=postgres;Port=5432;Database=fluxocaixa_consolidado;Username=admin;Password=admin123
+      - RabbitMQ:HostName=rabbitmq
+      - RabbitMQ:Port=5672
+      - RabbitMQ:UserName=admin
+      - RabbitMQ:Password=admin123
+      - RabbitMQ:VirtualHost=/
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
     networks:
       - fluxocaixa_network
       
