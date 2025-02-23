@@ -1,10 +1,15 @@
-
 using FluxoCaixa.Consolidado.Modules.Entity;
 using FluxoCaixa.Consolidado.Modules.Repositories;
 
 namespace FluxoCaixa.Consolidado.Modules.Services
 {
-    public class ConsolidadoService
+    public interface IConsolidadoService
+    {
+        Task AtualizarConsolidadoAsync(DateTime data, decimal valor);
+        Task<ConsolidadoDiario?> ObterConsolidadoPorDataAsync(DateTime data);
+    }
+
+    public class ConsolidadoService : IConsolidadoService
     {
         private readonly IConsolidadoRepository _repository;
 

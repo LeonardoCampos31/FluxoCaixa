@@ -7,9 +7,9 @@ namespace FluxoCaixa.Consolidado.Modules.Controllers
     [Route("api/consolidado")]
     public class ConsolidadoController : ControllerBase
     {
-        private readonly ConsolidadoService _service;
+        private readonly IConsolidadoService _service;
 
-        public ConsolidadoController(ConsolidadoService service)
+        public ConsolidadoController(IConsolidadoService service)
         {
             _service = service;
         }

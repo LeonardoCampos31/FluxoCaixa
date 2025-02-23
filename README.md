@@ -16,7 +16,7 @@ Sistema para controle de lançamentos (débitos e créditos) e geração de rela
 ### Passos
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/fluxocaixa.git
+   git clone https://github.com/LeonardoCampos31/FluxoCaixa.git
    cd fluxocaixa
 
 2. Acesse a pasta FluxoCaixa e Suba os containers:

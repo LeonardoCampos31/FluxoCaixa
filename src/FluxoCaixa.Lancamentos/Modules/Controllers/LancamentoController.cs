@@ -8,9 +8,9 @@ namespace FluxoCaixa.Lancamentos.Controllers
     [Route("api/lancamentos")]
     public class LancamentoController : ControllerBase
     {
-        private readonly LancamentoService _service;
+        private readonly ILancamentoService _service;
 
-        public LancamentoController(LancamentoService service)
+        public LancamentoController(ILancamentoService service)
         {
             _service = service;
         }

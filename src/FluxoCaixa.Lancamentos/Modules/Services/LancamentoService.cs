@@ -4,13 +4,20 @@ using FluxoCaixa.Lancamentos.Modules.Repositories;
 
 namespace FluxoCaixa.Lancamentos.Modules.Services
 {
-    public class LancamentoService
+
+    public interface ILancamentoService
+    {
+        Task AdicionarLancamentoAsync(decimal valor, string tipo);
+        Task<IEnumerable<Lancamento>> ObterLancamentosPorDataAsync(DateTime data);
+    }
+
+    public class LancamentoService : ILancamentoService
     {
         private readonly ILancamentoRepository _repository;
 
-        private readonly LancamentoProducer _producer;
+        private readonly ILancamentoProducer _producer;
 
-        public LancamentoService(ILancamentoRepository repository, LancamentoProducer producer)
+        public LancamentoService(ILancamentoRepository repository, ILancamentoProducer producer)
         {
             _repository = repository;
             _producer = producer;

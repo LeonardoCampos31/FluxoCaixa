@@ -15,7 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IRepository<ConsolidadoDiario>, Repository<ConsolidadoDiario>>();
 builder.Services.AddScoped<IConsolidadoRepository, ConsolidadoRepository>();
-builder.Services.AddScoped<ConsolidadoService>();
+builder.Services.AddScoped<IConsolidadoService, ConsolidadoService>();
  
 builder.Services.AddHostedService<ConsolidadoConsumer>();
 

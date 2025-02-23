@@ -6,7 +6,12 @@ using RabbitMQ.Client;
 
 namespace FluxoCaixa.Consolidado.Modules.Factory
 {
-    public class LancamentoProducer
+    public interface ILancamentoProducer
+    {
+        Task PublicarLancamento(decimal valor, string tipo);
+    }
+
+    public class LancamentoProducer : ILancamentoProducer
     {
         private readonly RabbitMQSettings _rabbitMQSettings;
         private IConnection _connection;

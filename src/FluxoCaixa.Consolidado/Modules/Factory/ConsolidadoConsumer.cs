@@ -54,7 +54,7 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
                 {
                     using (var scope = _serviceScopeFactory.CreateScope())
                     {
-                        var consolidadoService = scope.ServiceProvider.GetRequiredService<ConsolidadoService>();
+                        var consolidadoService = scope.ServiceProvider.GetRequiredService<IConsolidadoService>();
                         await consolidadoService.AtualizarConsolidadoAsync(lancamento.Data, lancamento.Valor);
                     }
                 }

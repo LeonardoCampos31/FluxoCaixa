@@ -14,8 +14,8 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IRepository<Lancamento>, Repository<Lancamento>>();
 builder.Services.AddScoped<ILancamentoRepository, LancamentoRepository>();
-builder.Services.AddScoped<LancamentoService>();
-builder.Services.AddScoped<LancamentoProducer>();
+builder.Services.AddScoped<ILancamentoService, LancamentoService>();
+builder.Services.AddScoped<ILancamentoProducer, LancamentoProducer>();
 
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
 
