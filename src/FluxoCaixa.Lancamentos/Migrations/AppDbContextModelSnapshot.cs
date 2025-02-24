@@ -22,7 +22,7 @@ namespace FluxoCaixa.Lancamentos.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("FluxoCaixa.Lancamentos.Modules.Models.Lancamento", b =>
+            modelBuilder.Entity("FluxoCaixa.Lancamentos.Modules.Entity.Lancamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

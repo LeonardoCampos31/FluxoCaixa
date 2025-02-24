@@ -1,5 +1,5 @@
 using FluxoCaixa.Lancamentos.Modules.DataTransfers.Context;
-using FluxoCaixa.Lancamentos.Modules.Models;
+using FluxoCaixa.Lancamentos.Modules.Entity;
 using FluxoCaixa.Lancamentos.Modules.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 

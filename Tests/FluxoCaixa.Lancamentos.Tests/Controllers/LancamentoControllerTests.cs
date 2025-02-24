@@ -1,6 +1,6 @@
 using FluxoCaixa.Lancamentos.Controllers;
 using FluxoCaixa.Lancamentos.Modules.DataTransfers;
-using FluxoCaixa.Lancamentos.Modules.Models;
+using FluxoCaixa.Lancamentos.Modules.Entity;
 using FluxoCaixa.Lancamentos.Modules.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

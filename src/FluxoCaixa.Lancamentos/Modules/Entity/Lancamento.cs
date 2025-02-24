@@ -1,4 +1,4 @@
-namespace FluxoCaixa.Lancamentos.Modules.Models
+namespace FluxoCaixa.Lancamentos.Modules.Entity
 {
     public class Lancamento
     {

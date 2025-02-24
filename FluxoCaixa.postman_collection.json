@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "c4287b84-487c-44d0-a910-91abe222e747",
+		"name": "FluxoCaixa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5899445",
+		"_collection_link": "https://neo777-8144.postman.co/workspace/Neo-Workspace~1fb7f09f-56dc-48ab-83bc-8f7695cd3b5e/collection/5899445-c4287b84-487c-44d0-a910-91abe222e747?action=share&source=collection_link&creator=5899445"
+	},
+	"item": [
+		{
+			"name": "lancamentos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5005/api/lancamentos?data=2025-02-24T00%3A00%3A00Z",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"api",
+						"lancamentos"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "2025-02-24T00%3A00%3A00Z"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lancamento Crédito",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"valor\": 100,\n  \"tipo\": \"Credito\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5005/api/lancamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"api",
+						"lancamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lancamento Debito",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"valor\": 100,\n  \"tipo\": \"Debito\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5005/api/lancamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5005",
+					"path": [
+						"api",
+						"lancamentos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "consolidado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5004/api/consolidado/2025-02-24T00%3A00%3A00Z",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5004",
+					"path": [
+						"api",
+						"consolidado",
+						"2025-02-24T00%3A00%3A00Z"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5004",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5004"
+				}
+			},
+			"response": []
+		}
+	]
+}

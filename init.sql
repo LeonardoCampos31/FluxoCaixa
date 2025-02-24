@@ -22,3 +22,5 @@ CREATE TABLE consolidado (
     data DATE NOT NULL UNIQUE,
     saldo DECIMAL(18,2) NOT NULL
 );
+
+CREATE INDEX idx_consolidado_data ON consolidado (data);

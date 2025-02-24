@@ -12,7 +12,7 @@ export const options = {
 };
 
 export default function () {
-    let res = http.get('http://host.docker.internal:5004/api/consolidado/2025-02-23T00:00:00Z', {
+    let res = http.get('http://host.docker.internal:5004/api/consolidado/2025-02-24T00:00:00Z', {
         headers: {
             'accept': '*/*',
             'Content-Type': 'application/json',

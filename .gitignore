@@ -6,3 +6,5 @@ Tests/FluxoCaixa.Consolidado.Tests/bin/
 Tests/FluxoCaixa.Consolidado.Tests/obj/
 Tests/FluxoCaixa.Lancamentos.Tests/bin/
 Tests/FluxoCaixa.Lancamentos.Tests/obj/
+src/FluxoCaixa.Consolidado/obj/
+src/FluxoCaixa.Lancamentos/obj/

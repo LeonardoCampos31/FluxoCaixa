@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using FluxoCaixa.Lancamentos.Modules.Models;
+using FluxoCaixa.Lancamentos.Modules.Entity;
 using FluxoCaixa.Lancamentos.Modules.Repositories;
 using FluxoCaixa.Lancamentos.Modules.DataTransfers.Context;
 

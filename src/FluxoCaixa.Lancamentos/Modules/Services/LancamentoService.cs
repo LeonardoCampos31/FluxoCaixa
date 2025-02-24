@@ -1,5 +1,5 @@
 using FluxoCaixa.Consolidado.Modules.Factory;
-using FluxoCaixa.Lancamentos.Modules.Models;
+using FluxoCaixa.Lancamentos.Modules.Entity;
 using FluxoCaixa.Lancamentos.Modules.Repositories;
 
 namespace FluxoCaixa.Lancamentos.Modules.Services

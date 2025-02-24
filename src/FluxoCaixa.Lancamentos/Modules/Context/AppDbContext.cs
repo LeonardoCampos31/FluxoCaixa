@@ -1,4 +1,4 @@
-using FluxoCaixa.Lancamentos.Modules.Models;
+using FluxoCaixa.Lancamentos.Modules.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FluxoCaixa.Lancamentos.Modules.DataTransfers.Context
