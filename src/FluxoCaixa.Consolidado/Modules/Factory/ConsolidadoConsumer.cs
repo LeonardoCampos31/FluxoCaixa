@@ -9,18 +9,12 @@ using RabbitMQ.Client.Events;
 
 namespace FluxoCaixa.Consolidado.Modules.Factory
 {
-    public class ConsolidadoConsumer : BackgroundService
+    public class ConsolidadoConsumer(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> rabbitMQSettings) : BackgroundService
     {
-        private readonly RabbitMQSettings _rabbitMQSettings;
-        private IConnection _connection;
-        private IChannel _channel;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
-
-        public ConsolidadoConsumer(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> rabbitMQSettings)
-        {
-            _serviceScopeFactory = serviceScopeFactory;
-            _rabbitMQSettings = rabbitMQSettings.Value;
-        }
+        private readonly RabbitMQSettings _rabbitMQSettings = rabbitMQSettings.Value;
+        private IConnection? _connection;
+        private IChannel? _channel;
+        private readonly IServiceScopeFactory _serviceScopeFactory = serviceScopeFactory;
 
         private async Task InitializeRabbitMQ()
         {
@@ -42,6 +36,11 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
         {
             await InitializeRabbitMQ();
 
+            if (_channel == null)
+            {
+                throw new InvalidOperationException("RabbitMQ channel is not initialized.");
+            }
+
             var consumer = new AsyncEventingBasicConsumer(_channel);
             
             consumer.ReceivedAsync += async (model, ea) =>
@@ -52,15 +51,13 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
 
                 if (lancamento != null)
                 {
-                    using (var scope = _serviceScopeFactory.CreateScope())
-                    {
-                        var consolidadoService = scope.ServiceProvider.GetRequiredService<IConsolidadoService>();
-                        await consolidadoService.AtualizarConsolidadoAsync(lancamento.Data, lancamento.Valor);
-                    }
+                    using var scope = _serviceScopeFactory.CreateScope();
+                    var consolidadoService = scope.ServiceProvider.GetRequiredService<IConsolidadoService>();
+                    await consolidadoService.AtualizarConsolidadoAsync(lancamento.Data, lancamento.Valor);
                 }
             };
 
-            await _channel.BasicConsumeAsync(queue: "lancamentos", autoAck: true, consumer: consumer);
+            await _channel.BasicConsumeAsync(queue: "lancamentos", autoAck: true, consumer: consumer, cancellationToken: stoppingToken);
             await Task.Delay(Timeout.Infinite, stoppingToken);
         }
 

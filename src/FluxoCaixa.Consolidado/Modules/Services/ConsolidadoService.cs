@@ -9,14 +9,9 @@ namespace FluxoCaixa.Consolidado.Modules.Services
         Task<ConsolidadoDiario?> ObterConsolidadoPorDataAsync(DateTime data);
     }
 
-    public class ConsolidadoService : IConsolidadoService
+    public class ConsolidadoService(IConsolidadoRepository repository) : IConsolidadoService
     {
-        private readonly IConsolidadoRepository _repository;
-
-        public ConsolidadoService(IConsolidadoRepository repository)
-        {
-            _repository = repository;
-        }
+        private readonly IConsolidadoRepository _repository = repository;
 
         public async Task AtualizarConsolidadoAsync(DateTime data, decimal valor)
         {

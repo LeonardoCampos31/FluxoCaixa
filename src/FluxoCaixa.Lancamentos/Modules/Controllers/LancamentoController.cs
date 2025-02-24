@@ -6,14 +6,9 @@ namespace FluxoCaixa.Lancamentos.Controllers
 {
     [ApiController]
     [Route("api/lancamentos")]
-    public class LancamentoController : ControllerBase
+    public class LancamentoController(ILancamentoService service) : ControllerBase
     {
-        private readonly ILancamentoService _service;
-
-        public LancamentoController(ILancamentoService service)
-        {
-            _service = service;
-        }
+        private readonly ILancamentoService _service = service;
 
         [HttpPost]
         public async Task<IActionResult> AdicionarLancamento([FromBody] LancamentoRequest request)

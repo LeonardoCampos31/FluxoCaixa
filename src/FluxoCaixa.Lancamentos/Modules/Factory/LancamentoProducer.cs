@@ -11,16 +11,11 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
         Task PublicarLancamento(decimal valor, string tipo);
     }
 
-    public class LancamentoProducer : ILancamentoProducer
+    public class LancamentoProducer(IOptions<RabbitMQSettings> rabbitMQSettings) : ILancamentoProducer, IDisposable
     {
-        private readonly RabbitMQSettings _rabbitMQSettings;
-        private IConnection _connection;
-        private IChannel _channel;
-
-        public LancamentoProducer(IOptions<RabbitMQSettings> rabbitMQSettings)
-        {
-            _rabbitMQSettings = rabbitMQSettings.Value;
-        }
+        private readonly RabbitMQSettings _rabbitMQSettings = rabbitMQSettings.Value;
+        private IConnection? _connection;
+        private IChannel? _channel;
 
         public async Task PublicarLancamento(decimal valor, string tipo)
         {
@@ -30,11 +25,16 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
             
             byte[] body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(lancamento));
 
-            var props = new BasicProperties();
-            props.ContentType = "text/plain";
-            props.DeliveryMode = DeliveryModes.Persistent;
+            var props = new BasicProperties
+            {
+                ContentType = "text/plain",
+                DeliveryMode = DeliveryModes.Persistent
+            };
 
-            await _channel.BasicPublishAsync(exchange: "", routingKey: "lancamentos", mandatory: true, basicProperties: props, body: body);
+            if (_channel != null)
+            {
+                await _channel.BasicPublishAsync(exchange: "", routingKey: "lancamentos", mandatory: true, basicProperties: props, body: body);
+            }
 
             Dispose();
         }
@@ -61,8 +61,8 @@ namespace FluxoCaixa.Consolidado.Modules.Factory
 
         public void Dispose()
         {
-            _channel.CloseAsync();
-            _connection.CloseAsync();
+            _channel?.CloseAsync();
+            _connection?.CloseAsync();
         }
     }
 }

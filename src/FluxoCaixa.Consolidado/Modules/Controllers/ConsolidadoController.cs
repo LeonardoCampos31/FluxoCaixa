@@ -5,14 +5,9 @@ namespace FluxoCaixa.Consolidado.Modules.Controllers
 {
     [ApiController]
     [Route("api/consolidado")]
-    public class ConsolidadoController : ControllerBase
+    public class ConsolidadoController(IConsolidadoService service) : ControllerBase
     {
-        private readonly IConsolidadoService _service;
-
-        public ConsolidadoController(IConsolidadoService service)
-        {
-            _service = service;
-        }
+        private readonly IConsolidadoService _service = service;
 
         [HttpGet("{data}")]
         public async Task<IActionResult> ObterConsolidadoPorData(DateTime data)

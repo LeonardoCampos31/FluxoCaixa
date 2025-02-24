@@ -11,17 +11,11 @@ namespace FluxoCaixa.Lancamentos.Modules.Services
         Task<IEnumerable<Lancamento>> ObterLancamentosPorDataAsync(DateTime data);
     }
 
-    public class LancamentoService : ILancamentoService
+    public class LancamentoService(ILancamentoRepository repository, ILancamentoProducer producer) : ILancamentoService
     {
-        private readonly ILancamentoRepository _repository;
+        private readonly ILancamentoRepository _repository = repository;
 
-        private readonly ILancamentoProducer _producer;
-
-        public LancamentoService(ILancamentoRepository repository, ILancamentoProducer producer)
-        {
-            _repository = repository;
-            _producer = producer;
-        }
+        private readonly ILancamentoProducer _producer = producer;
 
         public async Task AdicionarLancamentoAsync(decimal valor, string tipo)
         {
